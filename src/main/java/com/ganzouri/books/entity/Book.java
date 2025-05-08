@@ -14,6 +14,7 @@ public class Book {
         this.category = category;
         this.rate = rate;
     }
+
     public int getId() {
         return id;
     }

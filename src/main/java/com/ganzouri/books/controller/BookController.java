@@ -22,37 +22,37 @@ public class BookController {
     public List<Book> getAllBooks(@RequestParam(required = false) String category) {
          return books.stream().filter(book -> category == null || book.getCategory().equalsIgnoreCase(category)).toList();
     }
-    @GetMapping("/books/{title}")
-    public Book getBookByTitle(@PathVariable String title) {
+    @GetMapping("/books/{id}")
+    public Book getBookById(@PathVariable int id) {
         return books.stream()
-                .filter(book -> book.getTitle().equalsIgnoreCase(title))
+                .filter(book -> book.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
     @PostMapping("/books")
     public void addBook(@RequestBody Book book) {
-        boolean exists = books.stream().noneMatch(b -> b.getTitle().equalsIgnoreCase(book.getTitle()));
+        boolean exists = books.stream().noneMatch(b -> b.getId() == book.getId());
         if (exists)
             books.add(book);
         else
             System.out.println("Book already exists");
 
     }
-    @PutMapping("/books/{title}")
-    public void updateBook(@PathVariable String title, @RequestBody Book book) {
-        boolean exists = books.stream().noneMatch(b -> b.getTitle().equalsIgnoreCase(title));
+    @PutMapping("/books/{id}")
+    public void updateBook(@PathVariable int id, @RequestBody Book book) {
+        boolean exists = books.stream().anyMatch(b -> b.getId() == id);
         if (exists) {
-            books.removeIf(b -> b.getTitle().equalsIgnoreCase(title));
+            books.removeIf(b -> b.getId() == book.getId());
             books.add(book);
         } else {
             System.out.println("Book not found");
         }
     }
-    @DeleteMapping("/books/{title}")
-    public void deleteBook(@PathVariable String title) {
-        boolean exists = books.stream().noneMatch(b -> b.getTitle().equalsIgnoreCase(title));
+    @DeleteMapping("/books/{id}")
+    public void deleteBook(@PathVariable int id) {
+        boolean exists = books.stream().anyMatch(b -> b.getId() == id);
         if (exists) {
-            books.removeIf(b -> b.getTitle().equalsIgnoreCase(title));
+            books.removeIf(b -> b.getId() == id);
         } else {
             System.out.println("Book not found");
         }
