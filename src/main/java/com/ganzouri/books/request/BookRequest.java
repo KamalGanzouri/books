@@ -1,31 +1,32 @@
-package com.ganzouri.books.entity;
+package com.ganzouri.books.request;
 
+import com.ganzouri.books.entity.Book;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 
-public class Book {
-    @Max(value = Integer.MAX_VALUE, message = "ID must be less than or equal to Integer.MAX_VALUE")
-    @Min(value = 1, message = "ID must be greater than 0")
-    private int id;
+public class BookRequest {
+    @Size(min = 1, max = 50)
     private String title;
+    @Size(min = 1, max = 30)
     private String author;
+    @Size(min = 1, max = 15)
     private String category;
+    @Max(value = 10, message = "Rate must be less than or equal to 10")
+    @Min(0)
     private int rate;
 
-    public Book(int id, String title, String author, String category, int rate) {
-        this.id = id;
+    public BookRequest( String title, String author, String category, int rate) {
         this.title = title;
         this.author = author;
         this.category = category;
         this.rate = rate;
     }
 
-    public int getId() {
-        return id;
+    public static Book ConvertToBook( int id, BookRequest bookRequest) {
+        return new Book(id, bookRequest.getTitle(), bookRequest.getAuthor(), bookRequest.getCategory(), bookRequest.getRate());
     }
-    public void setId(int id) {
-        this.id = id;
-    }
+
     public String getTitle() {
         return title;
     }
@@ -50,15 +51,4 @@ public class Book {
     public void setRate(int rate) {
         this.rate = rate;
     }
-    @Override
-    public String toString() {
-        return "Book{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", category='" + category + '\'' +
-                ", rate=" + rate +
-                '}';
-    }
-
 }
