@@ -12,9 +12,9 @@ public class BookController {
     public ArrayList<Book> books = new ArrayList<>();
 
     public BookController() {
-        books.add(new Book("The Great Gatsby", "F. Scott Fitzgerald", "1234567890", 1925));
-        books.add(new Book("To Kill a Mockingbird", "Harper Lee", "0987654321", 1960));
-        books.add(new Book("1984", "George Orwell", "1122334455", 1949));
+        books.add(new Book(1,"The Great Gatsby", "F. Scott Fitzgerald", "1234567890", 1));
+        books.add(new Book(2,"To Kill a Mockingbird", "Harper Lee", "0987654321", 5));
+        books.add(new Book(3,"1984", "George Orwell", "1122334455", 7));
     }
 
 
